@@ -1,7 +1,7 @@
 # Dynamic CFO & Risk Intelligence Dashboard
 
 ## Live Demo
-https://123ujjwal.github.io/bajaj-finance-Management-dashboard/
+https://123ujjawl.github.io/bajaj-finance-Management-dashboard/
 
 ## Overview
 This project is a live CFO and Risk Intelligence Dashboard built for Bajaj Finance analysis. It converts financial, operating, risk and peer benchmark data into an executive-level management reporting dashboard.
