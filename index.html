@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>Bajaj Finance CFO Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-slate-950 text-white font-sans">
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <div id="dashboardContent" class="max-w-7xl mx-auto px-6 py-8"></div>
+
+        <header class="mb-8">
+            <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+                Dynamic CFO & Risk Intelligence Dashboard
+            </p>
+            <h1 class="text-4xl font-extrabold mt-2">
+                Bajaj Finance Limited
+            </h1>
+            <p class="text-slate-400 mt-2">
+                Live data connected from Google Sheets via Apps Script API
+            </p>
+            <p id="lastUpdated" class="text-sm text-slate-500 mt-1">
+    Last updated: Loading...
+</p>
+<div class="mt-4 flex gap-3">
+
+    <button onclick="window.print()"
+        class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg font-semibold">
+        Print Dashboard
+    </button>
+</div>
+        </header>
+
+        <section id="kpiCards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <p class="text-slate-400">Loading dashboard data...</p>
+        </section>
+        <section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <div class="flex justify-between items-center mb-4">
+        <div>
+            <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+                <section class="mt-8 bg-gradient-to-r from-cyan-900/30 to-slate-900 border border-cyan-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Executive Intelligence
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Automated CFO Summary
+    </h2>
+
+    <div id="executiveSummary" class="text-lg text-slate-200 leading-relaxed">
+        Loading executive summary...
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Scenario Analysis
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Base, Bull & Bear Case View
+    </h2>
+
+    <div id="scenarioPanel" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p>Loading scenarios...</p>
+    </div>
+</section>
+                Executive Narrative
+            </p>
+            <h2 class="text-2xl font-bold mt-1">Board-Level Summary</h2>
+        </div>
+    </div>
+
+    <div id="narrativePanel" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p class="text-slate-400">Loading executive summary...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <div class="mb-4">
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            CFO Insight Engine
+        </p>
+        <h2 class="text-2xl font-bold mt-1">KPI Movement, Management Explanation & Key Risks</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead class="text-slate-400 border-b border-slate-700">
+                <tr>
+                    <th class="py-3 pr-4">KPI</th>
+                    <th class="py-3 pr-4">FY25</th>
+                    <th class="py-3 pr-4">FY26</th>
+                    <th class="py-3 pr-4">Direction</th>
+                    <th class="py-3 pr-4">Management Explanation</th>
+                    <th class="py-3 pr-4">Key Risk</th>
+                </tr>
+            </thead>
+            <tbody id="insightTable" class="divide-y divide-slate-800">
+                <tr>
+                    <td class="py-3 text-slate-400" colspan="6">Loading CFO insights...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="mt-8">
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            CFO Risk Monitor
+        </p>
+
+        <h2 class="text-2xl font-bold mt-1 mb-4">
+            Financial Health Score
+        </h2>
+
+        <div id="riskScorePanel">
+            Loading risk score...
+        </div>
+
+    </div>
+
+</section>
+<section class="mt-8">
+
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Executive Scorecard
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Board Snapshot
+    </h2>
+
+    <div id="scorecardPanel"
+         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <p>Loading scorecard...</p>
+
+    </div>
+
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Variance Analysis
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        FY25 vs FY26 Movement
+    </h2>
+
+    <div id="variancePanel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <p>Loading variance analysis...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Risk Watchlist
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Key Management Risks
+    </h2>
+
+    <div id="riskWatchlist" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p>Loading risk watchlist...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Strategic Insights
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Management Priorities & Business Outlook
+    </h2>
+
+    <div id="strategicPanel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <p>Loading strategic insights...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Quarterly Performance
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        AUM, Deposits & Customer Franchise Trend
+    </h2>
+
+    <div id="quarterlyPanel" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p>Loading quarterly performance...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Board Conclusion
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        CFO Summary View
+    </h2>
+
+    <div id="boardConclusion" class="text-slate-300 leading-relaxed">
+        Loading board conclusion...
+    </div>
+</section>
+<section class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            Growth Analytics
+        </p>
+        <h2 class="text-2xl font-bold mt-1 mb-4">AUM Growth Trend</h2>
+        <div class="h-[260px]">
+    <canvas id="aumChart"></canvas>
+</div>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            Profitability Analytics
+        </p>
+        <h2 class="text-2xl font-bold mt-1 mb-4">PAT Growth Trend</h2>
+        <div class="h-[260px]">
+    <canvas id="patChart"></canvas>
+</div>
+    </div>
+
+</section>
+<section class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            Risk Intelligence
+        </p>
+        <h2 class="text-2xl font-bold mt-1 mb-4">GNPA Trend</h2>
+        <div class="h-[240px]">
+            <canvas id="gnpaChart"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+            Asset Quality
+        </p>
+        <h2 class="text-2xl font-bold mt-1 mb-4">NNPA Trend</h2>
+        <div class="h-[240px]">
+            <canvas id="nnpaChart"></canvas>
+        </div>
+    </div>
+
+</section>
+
+    </div><script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwvVYnID4aR9-cGPeo8biXYuSA7ztbkPTpxJZW4fbJOUPgWHdBNDbc22UHizw-925Ym/exec";
+
+function cleanNumber(value) {
+    return Number(String(value).replace(/,/g, ""));
+}
+
+function formatKPI(kpi, value) {
+    const num = cleanNumber(value);
+
+    if (["ROA", "ROE"].includes(kpi)) {
+        return (num * 100).toFixed(1) + "%";
+    }
+
+    if (["GNPA", "NNPA"].includes(kpi)) {
+        return num.toFixed(2) + "%";
+    }
+
+    if (["AUM", "PAT", "Deposits"].includes(kpi)) {
+        return "₹" + num.toLocaleString("en-IN") + " Cr";
+    }
+
+    if (kpi === "Customers") {
+        return num.toFixed(1) + " Mn";
+    }
+
+    return value;
+}
+function formatPeerValue(metric, value) {
+    const num = cleanNumber(value);
+
+    if (["ROA", "ROE", "GNPA", "Growth", "AUM Growth"].includes(metric)) {
+        return (num * 100).toFixed(metric === "GNPA" ? 2 : 1) + "%";
+    }
+
+    return value;
+}
+
+async function loadDashboard() {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    
+    document.getElementById("lastUpdated").innerText =
+    "Last updated: " + new Date().toLocaleString("en-IN");
+    const roa = cleanNumber(data.dashboardKPIs.find(x => x.KPI === "ROA")?.Value || 0);
+const roe = cleanNumber(data.dashboardKPIs.find(x => x.KPI === "ROE")?.Value || 0);
+const gnpa = cleanNumber(data.dashboardKPIs.find(x => x.KPI === "GNPA")?.Value || 0);
+
+let riskStatus = "Healthy";
+let riskColor = "text-green-400";
+let riskScore = 90;
+
+if (gnpa > 2) {
+    riskStatus = "Watchlist";
+    riskColor = "text-yellow-400";
+    riskScore = 70;
+}
+
+if (gnpa > 4) {
+    riskStatus = "Critical";
+    riskColor = "text-red-400";
+    riskScore = 40;
+}
+
+    const kpiContainer = document.getElementById("kpiCards");
+    kpiContainer.innerHTML = "";
+
+    data.dashboardKPIs.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg";
+        card.innerHTML = `
+            <p class="text-sm text-slate-400">${item.KPI}</p>
+            <h2 class="text-3xl font-bold text-cyan-400 mt-2">${formatKPI(item.KPI, item.Value)}</h2>
+        `;
+        kpiContainer.appendChild(card);
+    });
+
+    const narrativeContainer = document.getElementById("narrativePanel");
+    narrativeContainer.innerHTML = "";
+
+    data.dashboardNarrative.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-950/60 border border-slate-800 rounded-lg p-4";
+        card.innerHTML = `
+            <p class="text-sm text-cyan-400 font-semibold">${item.Section}</p>
+            <p class="text-slate-300 mt-2">${item.Key_Message}</p>
+        `;
+        narrativeContainer.appendChild(card);
+    });
+
+    const insightTable = document.getElementById("insightTable");
+    insightTable.innerHTML = "";
+
+    data.kpiCommentary.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td class="py-3 pr-4 font-semibold text-cyan-400">${item.KPI}</td>
+            <td class="py-3 pr-4">${formatKPI(item.KPI, item.FY25_Value)}</td>
+            
+<td class="py-3 pr-4">${formatKPI(item.KPI, item.FY26_Value)}</td>
+            <td class="py-3 pr-4">${item.Direction}</td>
+            <td class="py-3 pr-4 text-slate-300">${item.Management_Explanation}</td>
+            <td class="py-3 pr-4 text-orange-300">${item.Key_Risk}</td>
+        `;
+        insightTable.appendChild(row);
+    });
+
+    const years = data.annualKPIs.map(item => item.Year);
+    const aumValues = data.annualKPIs.map(item => cleanNumber(item.AUM_Cr));
+    const patValues = data.annualKPIs.map(item => cleanNumber(item.PAT_Cr));
+
+    const chartTextColor = "#cbd5e1";
+    const gridColor = "rgba(148, 163, 184, 0.15)";
+
+    new Chart(document.getElementById("aumChart"), {
+        type: "bar",
+        data: {
+            labels: years,
+            datasets: [{
+                label: "AUM ₹ Cr",
+                data: aumValues,
+                backgroundColor: "#22d3ee",
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: chartTextColor } } },
+            scales: {
+                x: { ticks: { color: chartTextColor }, grid: { color: gridColor } },
+                y: { ticks: { color: chartTextColor }, grid: { color: gridColor } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById("patChart"), {
+        type: "line",
+        data: {
+            labels: years,
+            datasets: [{
+                label: "PAT ₹ Cr",
+                data: patValues,
+                borderColor: "#4ade80",
+                backgroundColor: "rgba(74, 222, 128, 0.15)",
+                tension: 0.35,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: chartTextColor } } },
+            scales: {
+                x: { ticks: { color: chartTextColor }, grid: { color: gridColor } },
+                y: { ticks: { color: chartTextColor }, grid: { color: gridColor } }
+            }
+        }
+    });
+
+    const riskPeriods = data.assetQuality.map(item => item.Period);
+    const gnpaValues = data.assetQuality.map(item => cleanNumber(item["GNPA_%"]));
+    const nnpaValues = data.assetQuality.map(item => cleanNumber(item["NNPA_%"]));
+
+    function createRiskChart(canvasId, label, values, color) {
+        new Chart(document.getElementById(canvasId), {
+            type: "line",
+            data: {
+                labels: riskPeriods,
+                datasets: [{
+                    label: label,
+                    data: values,
+                    borderColor: color,
+                    backgroundColor: color + "33",
+                    tension: 0.35,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: chartTextColor } } },
+                scales: {
+                    x: { ticks: { color: chartTextColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: chartTextColor }, grid: { color: gridColor } }
+                }
+            }
+        });
+    }
+
+    createRiskChart("gnpaChart", "GNPA %", gnpaValues, "#fb7185");
+    createRiskChart("nnpaChart", "NNPA %", nnpaValues, "#facc15");
+
+    document.getElementById("riskScorePanel").innerHTML =
+    '<div class="flex items-center justify-between">' +
+        '<div>' +
+            '<p class="text-slate-400">Overall Health</p>' +
+            '<h2 class="text-4xl font-bold ' + riskColor + '">' + riskStatus + '</h2>' +
+        '</div>' +
+        '<div class="text-right">' +
+            '<p class="text-slate-400">Risk Score</p>' +
+            '<h2 class="text-5xl font-bold text-cyan-400">' + riskScore + '</h2>' +
+        '</div>' +
+    '</div>';
+const scorecardPanel =
+    document.getElementById("scorecardPanel");
+
+scorecardPanel.innerHTML = `
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Growth</p>
+        <h3 class="text-green-400 text-xl font-bold">
+            Strong
+        </h3>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Profitability</p>
+        <h3 class="text-green-400 text-xl font-bold">
+            Strong
+        </h3>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Asset Quality</p>
+        <h3 class="text-green-400 text-xl font-bold">
+            Healthy
+        </h3>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Risk Level</p>
+        <h3 class="${riskColor} text-xl font-bold">
+            ${riskStatus}
+        </h3>
+    </div>
+`;
+const annual = data.annualKPIs;
+const fy25 = annual.find(x => x.Year === "FY25");
+const fy26 = annual.find(x => x.Year === "FY26");
+
+function varianceCard(title, oldVal, newVal, suffix) {
+    const change = ((cleanNumber(newVal) - cleanNumber(oldVal)) / cleanNumber(oldVal)) * 100;
+    const direction = change >= 0 ? "▲" : "▼";
+    const color = change >= 0 ? "text-green-400" : "text-red-400";
+
+    return `
+        <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+            <p class="text-slate-400">${title}</p>
+            <h3 class="text-xl font-bold ${color}">
+                ${direction} ${Math.abs(change).toFixed(1)}%
+            </h3>
+            <p class="text-sm text-slate-400 mt-2">
+                FY25: ${suffix === " Cr" ? "₹" + cleanNumber(oldVal).toLocaleString("en-IN") + " Cr" : cleanNumber(oldVal).toFixed(1) + " Mn"} → FY26: ${suffix === " Cr" ? "₹" + cleanNumber(newVal).toLocaleString("en-IN") + " Cr" : cleanNumber(newVal).toFixed(1) + " Mn"}
+            </p>
+        </div>
+    `;
+}
+
+document.getElementById("variancePanel").innerHTML =
+    varianceCard("AUM Growth", fy25.AUM_Cr, fy26.AUM_Cr, " Cr") +
+    varianceCard("PAT Growth", fy25.PAT_Cr, fy26.PAT_Cr, " Cr") +
+    varianceCard("Deposits Movement", fy25.Deposits_Cr, fy26.Deposits_Cr, " Cr") +
+    varianceCard("Customer Growth", fy25.Customer_Franchise_Mn, fy26.Customer_Franchise_Mn, " Mn");
+const riskWatchlist = document.getElementById("riskWatchlist");
+riskWatchlist.innerHTML = "";
+
+data.kpiCommentary.forEach(item => {
+    if (!item.Key_Risk) return;
+
+    const card = document.createElement("div");
+    card.className = "bg-slate-950/60 border border-slate-800 rounded-lg p-4";
+
+    card.innerHTML = `
+        <p class="text-cyan-400 font-semibold">${item.KPI}</p>
+        <p class="text-orange-300 mt-2">${item.Key_Risk}</p>
+    `;
+
+    riskWatchlist.appendChild(card);
+});
+const strategicPanel = document.getElementById("strategicPanel");
+strategicPanel.innerHTML = "";
+
+data.managementInsights.forEach(item => {
+    const card = document.createElement("div");
+
+    card.className =
+        "bg-slate-950/60 border border-slate-800 rounded-lg p-4";
+
+    card.innerHTML = `
+        <p class="text-cyan-400 font-semibold">${item.Category}</p>
+        <p class="text-slate-300 mt-2">${item.Insight}</p>
+    `;
+
+    strategicPanel.appendChild(card);
+});
+const quarterlyPanel = document.getElementById("quarterlyPanel");
+quarterlyPanel.innerHTML = "";
+
+const latestQuarter = data.quarterlyKPIs[data.quarterlyKPIs.length - 1];
+
+quarterlyPanel.innerHTML = `
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Latest Period</p>
+        <h3 class="text-cyan-400 text-xl font-bold">${latestQuarter.Period}</h3>
+    </div>
+
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">AUM</p>
+        <h3 class="text-cyan-400 text-xl font-bold">
+    ₹${cleanNumber(latestQuarter.AUM_Cr).toLocaleString("en-IN")} Cr
+</h3>
+    </div>
+
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+        <p class="text-slate-400">Customer Franchise</p>
+        <h3 class="text-cyan-400 text-xl font-bold">
+    ${cleanNumber(latestQuarter.Customer_Franchise_Mn).toFixed(1)} Mn
+</h3>
+    </div>
+`;
+document.getElementById("boardConclusion").innerHTML = `
+    Bajaj Finance delivered strong FY26 growth with AUM expanding by
+    <span class="text-green-400 font-semibold">22.4%</span>
+    and PAT increasing by
+    <span class="text-green-400 font-semibold">15.2%</span>.
+    Asset quality remained controlled with GNPA at
+    <span class="text-cyan-400 font-semibold">${formatKPI("GNPA", gnpa)}</span>,
+    while customer franchise growth continues to support future scale.
+    Key watch areas remain provisioning, unsecured portfolio risk, and competitive funding dynamics.
+`;
+document.getElementById("autoCommentary").innerHTML = `
+    During FY26, Bajaj Finance demonstrated strong operating momentum with AUM at
+    <span class="text-cyan-400 font-semibold">${formatKPI("AUM", data.dashboardKPIs.find(x => x.KPI === "AUM").Value)}</span>
+    and PAT at
+    <span class="text-cyan-400 font-semibold">${formatKPI("PAT", data.dashboardKPIs.find(x => x.KPI === "PAT").Value)}</span>.
+    Profitability remained healthy despite ROA moderation to
+    <span class="text-cyan-400 font-semibold">${formatKPI("ROA", roa)}</span>.
+    Asset quality stayed resilient with GNPA at
+    <span class="text-cyan-400 font-semibold">${formatKPI("GNPA", gnpa)}</span>.
+    Overall, the company remains in a
+    <span class="${riskColor} font-semibold">${riskStatus}</span>
+    risk zone with a CFO risk score of
+    <span class="text-cyan-400 font-semibold">${riskScore}</span>.
+`;
+function decisionCard(title, status, colorClass) {
+    return `
+        <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+            <p class="text-slate-400">${title}</p>
+            <h3 class="${colorClass} text-xl font-bold mt-1">
+                ${status}
+            </h3>
+        </div>
+    `;
+}
+
+const growthStatus = cleanNumber(fy26.AUM_Cr) > cleanNumber(fy25.AUM_Cr)
+    ? ["Green", "text-green-400"]
+    : ["Red", "text-red-400"];
+
+const profitabilityStatus = cleanNumber(fy26.PAT_Cr) > cleanNumber(fy25.PAT_Cr)
+    ? ["Green", "text-green-400"]
+    : ["Amber", "text-yellow-400"];
+
+const assetQualityStatus = gnpa <= 1.5
+    ? ["Green", "text-green-400"]
+    : gnpa <= 3
+        ? ["Amber", "text-yellow-400"]
+        : ["Red", "text-red-400"];
+
+const fundingStatus = cleanNumber(fy26.Deposits_Cr) >= cleanNumber(fy25.Deposits_Cr)
+    ? ["Green", "text-green-400"]
+    : ["Amber", "text-yellow-400"];
+
+const customerStatus = cleanNumber(fy26.Customer_Franchise_Mn) > cleanNumber(fy25.Customer_Franchise_Mn)
+    ? ["Green", "text-green-400"]
+    : ["Red", "text-red-400"];
+
+document.getElementById("decisionPanel").innerHTML =
+    decisionCard("Growth", growthStatus[0], growthStatus[1]) +
+    decisionCard("Profitability", profitabilityStatus[0], profitabilityStatus[1]) +
+    decisionCard("Asset Quality", assetQualityStatus[0], assetQualityStatus[1]) +
+    decisionCard("Funding", fundingStatus[0], fundingStatus[1]) +
+    decisionCard("Customer Growth", customerStatus[0], customerStatus[1]);
+    document.getElementById("actionTrackerPanel").innerHTML = `
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-green-400 font-bold mb-2">
+        Growth Priorities
+    </h3>
+
+    <ul class="space-y-2 text-slate-300">
+        <li>• Expand customer acquisition through digital channels</li>
+        <li>• Increase cross-sell penetration across existing base</li>
+        <li>• Maintain AUM growth above industry average</li>
+    </ul>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-yellow-400 font-bold mb-2">
+        Risk Priorities
+    </h3>
+
+    <ul class="space-y-2 text-slate-300">
+        <li>• Monitor unsecured lending portfolio performance</li>
+        <li>• Improve collection efficiency</li>
+        <li>• Maintain GNPA below 1.5%</li>
+    </ul>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-cyan-400 font-bold mb-2">
+        Funding Priorities
+    </h3>
+
+    <ul class="space-y-2 text-slate-300">
+        <li>• Deepen retail deposit franchise</li>
+        <li>• Diversify borrowing sources</li>
+        <li>• Improve liquidity buffer</li>
+    </ul>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-purple-400 font-bold mb-2">
+        Profitability Priorities
+    </h3>
+
+    <ul class="space-y-2 text-slate-300">
+        <li>• Protect ROE above 20%</li>
+        <li>• Optimize operating leverage</li>
+        <li>• Manage credit cost inflation</li>
+    </ul>
+</div>
+`;
+function heatMapCard(title, status, colorClass) {
+    return `
+        <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+            <p class="text-slate-400">${title}</p>
+            <h3 class="${colorClass} text-xl font-bold mt-1">
+                ${status}
+            </h3>
+        </div>
+    `;
+}
+
+document.getElementById("riskHeatMapPanel").innerHTML =
+    heatMapCard("Credit Risk", gnpa <= 1.5 ? "Low" : "Medium", gnpa <= 1.5 ? "text-green-400" : "text-yellow-400") +
+    heatMapCard("Funding Risk", fundingStatus[0] === "Green" ? "Low" : "Medium", fundingStatus[1]) +
+    heatMapCard("Profitability Risk", cleanNumber(fy26.ROE) >= 0.18 ? "Low" : "Medium", cleanNumber(fy26.ROE) >= 0.18 ? "text-green-400" : "text-yellow-400") +
+    heatMapCard("Regulatory Risk", "Medium", "text-yellow-400") +
+    heatMapCard("Cyber/Data Risk", "Medium", "text-yellow-400");
+    document.getElementById("investmentThesisPanel").innerHTML = `
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-green-400 font-bold mb-2">Strengths</h3>
+    <ul class="space-y-2 text-slate-300">
+        <li>• AUM crossed ₹5 lakh crore</li>
+        <li>• Strong customer franchise expansion</li>
+        <li>• PAT growth remained positive</li>
+        <li>• Asset quality remained controlled</li>
+    </ul>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-yellow-400 font-bold mb-2">Watch Areas</h3>
+    <ul class="space-y-2 text-slate-300">
+        <li>• ROA and ROE moderation</li>
+        <li>• Unsecured lending risk</li>
+        <li>• Funding competition</li>
+        <li>• ECL provisioning impact</li>
+    </ul>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-cyan-400 font-bold mb-2">Strategic View</h3>
+    <p class="text-slate-300">
+        Bajaj Finance continues to demonstrate scale-led growth with resilient asset quality.
+        Key focus areas remain profitability protection, risk discipline and digital-led customer expansion.
+    </p>
+</div>
+`;
+const peerBenchmarkTable = document.getElementById("peerBenchmarkTable");
+peerBenchmarkTable.innerHTML = "";
+
+data.peerComparison.forEach(item => {
+    const row = document.createElement("tr");
+row.innerHTML = `
+    <td class="py-3 pr-4 font-semibold text-cyan-400">${item.Metric}</td>
+    <td class="py-3 pr-4">${formatPeerValue(item.Metric, item.Bajaj)}</td>
+    <td class="py-3 pr-4">${formatPeerValue(item.Metric, item.Chola)}</td>
+    <td class="py-3 pr-4">${formatPeerValue(item.Metric, item.Shriram)}</td>
+    <td class="py-3 pr-4">${formatPeerValue(item.Metric, item.Muthoot)}</td>
+`;
+
+    peerBenchmarkTable.appendChild(row);
+});
+const aumGrowthPct =
+    ((cleanNumber(fy26.AUM_Cr) - cleanNumber(fy25.AUM_Cr)) / cleanNumber(fy25.AUM_Cr)) * 100;
+
+const patGrowthPct =
+    ((cleanNumber(fy26.PAT_Cr) - cleanNumber(fy25.PAT_Cr)) / cleanNumber(fy25.PAT_Cr)) * 100;
+
+document.getElementById("executiveSummary").innerHTML = `
+    Bajaj Finance delivered
+    <span class="text-green-400 font-semibold">${aumGrowthPct.toFixed(1)}%</span>
+    AUM growth and
+    <span class="text-green-400 font-semibold">${patGrowthPct.toFixed(1)}%</span>
+    PAT growth, while maintaining GNPA at
+    <span class="text-cyan-400 font-semibold">${formatKPI("GNPA", gnpa)}</span>.
+    The business remains in a
+    <span class="${riskColor} font-semibold">${riskStatus}</span>
+    zone with a CFO risk score of
+    <span class="text-cyan-400 font-semibold">${riskScore}</span>.
+`;
+document.getElementById("scenarioPanel").innerHTML = `
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-green-400 font-bold mb-2">Bull Case</h3>
+    <p class="text-slate-300">
+        Higher AUM growth, stable asset quality and improved operating leverage may support stronger ROE recovery.
+    </p>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-cyan-400 font-bold mb-2">Base Case</h3>
+    <p class="text-slate-300">
+        Current trajectory indicates healthy growth with controlled GNPA and stable profitability.
+    </p>
+</div>
+
+<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
+    <h3 class="text-red-400 font-bold mb-2">Bear Case</h3>
+    <p class="text-slate-300">
+        Higher credit cost, unsecured portfolio stress or funding pressure may reduce profitability and risk score.
+    </p>
+</div>
+`;
+}
+
+loadDashboard();
+</script>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Auto Commentary
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Management Review Note
+    </h2>
+
+    <div id="autoCommentary" class="text-slate-300 leading-relaxed">
+        Loading management commentary...
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        CFO Decision Dashboard
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Green / Amber / Red Indicators
+    </h2>
+
+    <div id="decisionPanel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <p>Loading decision indicators...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Management Action Tracker
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Key Priorities & Strategic Actions
+    </h2>
+
+    <div id="actionTrackerPanel" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p>Loading management priorities...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Board Risk Heat Map
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Key Risk Areas & Severity
+    </h2>
+
+    <div id="riskHeatMapPanel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <p>Loading risk heat map...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Investment Thesis
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Strengths, Watch Areas & Strategic View
+    </h2>
+
+    <div id="investmentThesisPanel" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p>Loading investment thesis...</p>
+    </div>
+</section>
+<section class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">
+        Peer Benchmark
+    </p>
+
+    <h2 class="text-2xl font-bold mt-1 mb-4">
+        Bajaj Finance vs Listed NBFC Peers
+    </h2>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead class="text-slate-400 border-b border-slate-700">
+                <tr>
+                    <th class="py-3 pr-4">Metric</th>
+                    <th class="py-3 pr-4">Bajaj</th>
+                    <th class="py-3 pr-4">Chola</th>
+                    <th class="py-3 pr-4">Shriram</th>
+                    <th class="py-3 pr-4">Muthoot</th>
+                </tr>
+            </thead>
+
+            <tbody id="peerBenchmarkTable" class="divide-y divide-slate-800">
+                <tr>
+                    <td class="py-3 text-slate-400" colspan="5">
+                        Loading peer benchmark...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<footer class="mt-10 border-t border-slate-800 pt-6 text-sm text-slate-400">
+    <p>
+        Source: Google Sheets connected through Apps Script API. Figures based on Bajaj Finance dataset.
+    </p>
+    <p class="mt-1">
+        Dashboard prepared for CFO Performance, Risk & Management Review.
+    </p>
+</footer>
+
+</div>  
+</body>
+</html>
